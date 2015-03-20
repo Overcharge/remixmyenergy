@@ -1,8 +1,15 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<polymer-element name="main-screen-squared">
+<polymer-element name="mainscreen-squared">
   <template>
     <core-scaffold>
+
+
+      <core-header-panel navigation flex>
+        <core-toolbar>
+          <span>Menu</span>
+        </core-toolbar>
+      </core-header-panel>
 
       <div fit>
         <h1>Overcharge Rocks!</h1>
@@ -13,7 +20,7 @@
 
   <script>
 
-    Polymer("main-screen", {
+    Polymer("mainscreen-squared", {
       ready: function() {
         console.log("Main screen is loaded!")
       }
