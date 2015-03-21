@@ -20,14 +20,16 @@ content="black-translucent" >
     <link rel="import" href="bower_components/google-map/google-map.html">
     <link rel="import" href="elements/remix-map.html">
     <link rel="import" href="elements/remix-header.html">
+    <link rel="import" href="elements/remix-map-marker.html">
+
   </head>
   <body vertical layout>
     <header>
         <remix-header> </remix-header>
     </header>
-    <remix-map latitude="45.750469" longitude="4.825446" flex >
+    <remix-map latitude="45.750469" longitude="4.825446" minZoom="9" maxZoom="11" language="fr" map="{{map1}}" flex >
         <google-map-marker latitude="45.768762" longitude="4.827077"
-      title="Go Giants!"></google-map-marker>
+      title="Go Giants!" map="{{map1}}" clickEvents="true" on-google-map-marker-click="{{markerClicked}}" ></google-map-marker>
     </remix-map>
   </body>
 </html>
