@@ -1,15 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <polymer-element name="remix-map" extends="google-map">
-  <style>
-      remix-map {
-        height: 600px;
-      }
-  </style>
-
   <script>
     Polymer({
-
       getMapOptions: function() {
         var mapOptions = this.super();
         mapOptions["streetViewControl"] = false;

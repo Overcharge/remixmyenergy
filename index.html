@@ -15,17 +15,19 @@ content="black-translucent" >
     <meta name="application-name" content="EcoQuartier">
 
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="import" href="bower_components/core-component-page/core-component-page.html">
     <link rel="import" href="bower_components/google-map/google-map.html">
     <link rel="import" href="elements/remix-map.html">
+    <link rel="import" href="elements/remix-header.html">
   </head>
-  <body>
+  <body vertical layout>
     <header>
-        <core-header-panel flex>
-          <core-toolbar></core-toolbar>
-          <div></div>
-        </core-header-panel>
+        <remix-header> </remix-header>
     </header>
-    <remix-map latitude="45.750469" longitude="4.825446"></remix-map>
+    <remix-map latitude="45.750469" longitude="4.825446" flex >
+        <google-map-marker latitude="45.768762" longitude="4.827077"
+      title="Go Giants!"></google-map-marker>
+    </remix-map>
   </body>
 </html>
