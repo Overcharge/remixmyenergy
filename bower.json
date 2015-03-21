@@ -18,6 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "google-map": "GoogleWebComponents/google-map#~0.4.2"
+    "google-map": "GoogleWebComponents/google-map#~0.4.2",
+    "core-header-panel": "Polymer/core-header-panel#~0.5.5"
   }
 }
