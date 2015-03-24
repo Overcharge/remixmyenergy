@@ -38,7 +38,20 @@
          result.push([coord[1], coord[0]]);
        }
        return result;
-    }
+    };
+    function onMouse(event) {
+      if (event.type == "click")
+      {
+         event.target._map.fitBounds(event.target.getBounds(), {animate:true, pan:{duration:1}});
+      }
+      else if (event.type == "mouseover")
+       {
+          event.target.setStyle({color:'#0f3'});
+       }
+       else{
+          event.target.setStyle({color:'#03f'});
+       }
+    };
     
   	Polymer('remix-map', {
       domReady: function() {
@@ -84,6 +97,7 @@
     				});
     		     marker.bindPopup(e.properties.nom);
     		     marker.addTo(map);
+    		     marker.on("mouseover mouseout click", onMouse);
     		   }
           }, function(xhr) { console.error(xhr); });
       }
