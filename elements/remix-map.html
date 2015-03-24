@@ -30,6 +30,15 @@
         xhr.open("GET", path, true);
         xhr.send();
     };
+    function invertCoord(array) {
+       var result = []
+       for (var i = 0; i<array.length ;i++)
+       {
+         var coord = array[i];
+         result.push([coord[1], coord[0]]);
+       }
+       return result;
+    }
     
   	Polymer('remix-map', {
       domReady: function() {
@@ -61,6 +70,19 @@
     					alt: e.title
     				});
     		     marker.bindPopup(e.description);
+    		     marker.addTo(map);
+    		   }
+          }, function(xhr) { console.error(xhr); });
+        loadJSON("data/perimetre_de_quartier.json", function(elements) {
+            for (var i=0; i < elements.features.length; i++) {
+    		     var e = elements.features[i];
+    		     var marker = L.polygon(invertCoord(e.geometry.coordinates[0]), {
+    					clickable: true,
+    					title: e.properties.nom,
+    					weight :2,
+    					opacity :1
+    				});
+    		     marker.bindPopup(e.properties.nom);
     		     marker.addTo(map);
     		   }
           }, function(xhr) { console.error(xhr); });
