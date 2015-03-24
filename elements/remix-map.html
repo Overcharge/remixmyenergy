@@ -4,12 +4,12 @@
 <polymer-element name="remix-map" attributes="latitude longitude zoom">
   <template>
     <link rel="stylesheet" href="../bower_components/leaflet/dist/leaflet.css" />
-	<style>
-		:host { display: block; } 
-		:host #map {height:100%; width:100%}
-	</style>
-	<div id="map"></div>
-	<content id="markers" select="*"></content>
+  <style>
+    :host { display: block; }
+    :host #map {height:100%; width:100%}
+  </style>
+  <div id="map"></div>
+  <content id="markers" select="*"></content>
   </template>
   <script>
     function loadJSON(path, success, error)
@@ -52,8 +52,8 @@
           event.target.setStyle({color:'#03f'});
        }
     };
-    
-  	Polymer('remix-map', {
+
+    Polymer('remix-map', {
       domReady: function() {
         var map = L.map(this.$.map, {
             center: [this.latitude, this.longitude],
@@ -61,44 +61,67 @@
           });
         this.map = map;
         // add a default layer if there are no layers defined
-		var defaultLayerRequired = true;
-		for (var i = 0; i < this.children.length; i++) {
-			var e = this.children[i];
-			if (e.isLayer && e.isLayer()) {
-				defaultLayerRequired = false;
-			}
-		}
-		if (defaultLayerRequired) {
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-				maxZoom: 18
-			}).addTo(this.map);
-		};
-		loadJSON("data/projects.json", function(elements) {
+    var defaultLayerRequired = true;
+    for (var i = 0; i < this.children.length; i++) {
+      var e = this.children[i];
+      if (e.isLayer && e.isLayer()) {
+        defaultLayerRequired = false;
+      }
+    }
+    if (defaultLayerRequired) {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+      }).addTo(this.map);
+    };
+    loadJSON("data/users.json", function(elements) {
             for (var i=0; i < elements.length; i++) {
-    		     var e = elements[i];
-    		     var marker = L.marker([e.lat, e.lon], {
-    					clickable: true,
-    					title: e.title,
-    					alt: e.title
-    				});
-    		     marker.bindPopup(e.description);
-    		     marker.addTo(map);
-    		   }
+            var greenIcon = L.icon({
+                iconUrl: 'leaflet/dist/images/marker-leaf-green.png',
+                shadowUrl: 'leaflet/dist/images/leaf-shadow.png',
+
+                iconSize:     [38, 95], // size of the icon
+                shadowSize:   [50, 64], // size of the shadow
+                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                shadowAnchor: [4, 62],  // the same for the shadow
+                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
+             var e = elements[i];
+             var marker = L.marker([e.lat, e.lon], {
+              icon: greenIcon,
+              clickable: true,
+              title: e.title,
+              alt: e.title
+            });
+             marker.bindPopup(e.description);
+             marker.addTo(map);
+           }
+          }, function(xhr) { console.error(xhr); });
+    loadJSON("data/projects.json", function(elements) {
+            for (var i=0; i < elements.length; i++) {
+             var e = elements[i];
+             var marker = L.marker([e.lat, e.lon], {
+              clickable: true,
+              title: e.title,
+              alt: e.title
+            });
+             marker.bindPopup(e.description);
+             marker.addTo(map);
+           }
           }, function(xhr) { console.error(xhr); });
         loadJSON("data/perimetre_de_quartier.json", function(elements) {
             for (var i=0; i < elements.features.length; i++) {
-    		     var e = elements.features[i];
-    		     var marker = L.polygon(invertCoord(e.geometry.coordinates[0]), {
-    					clickable: true,
-    					title: e.properties.nom,
-    					weight :2,
-    					opacity :1
-    				});
-    		     marker.bindPopup(e.properties.nom);
-    		     marker.addTo(map);
-    		     marker.on("mouseover mouseout click", onMouse);
-    		   }
+             var e = elements.features[i];
+             var marker = L.polygon(invertCoord(e.geometry.coordinates[0]), {
+              clickable: true,
+              title: e.properties.nom,
+              weight :2,
+              opacity :1
+            });
+             marker.bindPopup(e.properties.nom);
+             marker.addTo(map);
+             marker.on("mouseover mouseout click", onMouse);
+           }
           }, function(xhr) { console.error(xhr); });
       }
     });
